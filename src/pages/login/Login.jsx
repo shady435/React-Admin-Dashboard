@@ -14,10 +14,32 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+const handleSubmit = async (e) => {
+  e.preventDefault()
+  setError('')
+  setLoading(true)
+
+  try {
+    const response = await login(email, password)
+
+    console.log('Login response:', response)
+    console.log('Login data:', response?.data)
+
+    navigate('/')
+  } catch (err) {
+    console.error('Login error:', err)
+    console.error('Error response:', err.response)
+    console.error('Error data:', err.response?.data)
+    console.error('Status code:', err.response?.status)
+
+    setError(
+      err.response?.data?.message ||
+      err.message ||
+      'فشل تسجيل الدخول، حاول تاني'
+    )
+  } finally {
+    setLoading(false)
+  }
 
     try {
       await login(email, password)

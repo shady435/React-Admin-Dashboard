@@ -11,7 +11,7 @@ api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
 
-
+    // تسجيل الدخول لا يحتاج توكن قديم
     if (token && config.url !== '/auth/login') {
       config.headers.Authorization = `Bearer ${token}`;
     }
