@@ -1,19 +1,19 @@
 @import "tailwindcss";
-
-@source "../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}";
+@plugin './hero.js';
+/* Note: You may need to change the path to fit your project structure */
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 @custom-variant dark (&:is(.dark, .dark *));
 
-body {
-  background-color: #f1f5f9;
+body{
+    background-color: #F1F5F9;
 }
-
-.dark body {
-  background-color: #020617;
+.dark body{
+    background-color: #020617;
 }
+.active{
+    background-color: #1F2937;
+    border-radius: 16px;
+    color: white;
 
-.active {
-  background-color: #1f2937;
-  border-radius: 16px;
-  color: white;
-  width: 100%;
+  width:100%;
 }
