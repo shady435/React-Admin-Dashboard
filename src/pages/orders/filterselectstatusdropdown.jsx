@@ -1,19 +1,14 @@
-// filterselectstatusdropdown.jsx
 import { useState } from 'react'
 import { ChevronDown, Loader2 } from 'lucide-react'
 import { StatusPill } from './statusbadge'
 import { STATUS_OPTIONS } from './utils'
-
 export function FilterSelect({ value, onChange, label, options }) {
   const [open, setOpen] = useState(false)
-
   const display = value === 'all' ? label : value
-
   const handleSelect = (opt) => {
     setOpen(false)
     onChange(opt)
   }
-
   return (
     <div className="relative">
       <button
@@ -24,7 +19,6 @@ export function FilterSelect({ value, onChange, label, options }) {
         {display}
         <ChevronDown className={`w-4 h-4 text-koda-muted transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
-
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
@@ -56,8 +50,6 @@ export function FilterSelect({ value, onChange, label, options }) {
     </div>
   )
 }
-
-
 export function StatusDropdown({ order, onChange, disabled }) {
   const [open, setOpen] = useState(false)
 
@@ -65,7 +57,6 @@ export function StatusDropdown({ order, onChange, disabled }) {
     setOpen(false)
     if (opt !== order.status) onChange(opt)
   }
-
   return (
     <div className="relative inline-block">
       <button
@@ -81,7 +72,6 @@ export function StatusDropdown({ order, onChange, disabled }) {
           <ChevronDown className={`w-3.5 h-3.5 text-koda-muted transition-transform ${open ? 'rotate-180' : ''}`} />
         )}
       </button>
-
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />

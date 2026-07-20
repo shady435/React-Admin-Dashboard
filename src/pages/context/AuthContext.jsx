@@ -5,13 +5,10 @@ const AuthContext = createContext(null)
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true) // بنستنى نتأكد لو فيه سيشن محفوظة الأول
-
-  // لما التطبيق يفتح، بنجيب اليوزر والتوكن المحفوظين (لو موجودين) عشان السيشن تفضل شغالة بعد الريفريش
+  const [loading, setLoading] = useState(true) 
   useEffect(() => {
     const token = localStorage.getItem('token')
     const savedUser = localStorage.getItem('user')
-
     if (token && savedUser) {
       try {
         setUser(JSON.parse(savedUser))
@@ -29,19 +26,15 @@ export function AuthProvider({ children }) {
     if (!data?.token) {
       throw new Error('لم يتم استلام توكن من السيرفر')
     }
-
-    // لازم يكون role admin عشان يدخل الداش بورد
     if (data.user?.role !== 'admin') {
       throw new Error('هذا الحساب غير مصرح له بدخول لوحة التحكم')
     }
-
     localStorage.setItem('token', data.token)
     localStorage.setItem('user', JSON.stringify(data.user))
     setUser(data.user)
 
     return data.user
   }
-
   const logout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')

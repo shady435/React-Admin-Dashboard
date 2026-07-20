@@ -1,6 +1,5 @@
 import React from 'react';
 import { Search, Plus, ChevronDown } from 'lucide-react';
-
 function UserHeader({ onAddUserClick, showForm, searchValue, onSearchChange }) {
     return(
         <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft mb-6 flex flex-col md:flex-row justify-between items-center gap-4">

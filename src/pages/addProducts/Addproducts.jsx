@@ -2,7 +2,6 @@ import { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { ArrowLeft, ImagePlus, Package, X, Plus, Loader2, CheckCircle2 } from "lucide-react";
-
 const api = axios.create({
   baseURL: "https://e-commerce-api-3wara.vercel.app",
 });
@@ -10,12 +9,11 @@ const api = axios.create({
 const DEV_FALLBACK_TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNDNjYmQ0MzMwYTZjN2ZkYWZlOTc1ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0MzY5NzY4NywiZXhwIjoxNzg0MTI5NjfQ.-QGbSF3VUf6y80VcN5w909MqauW90439-M42W0GqV7Y";
 
-api.interceptors.request.use((config) => {
+  api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token") || DEV_FALLBACK_TOKEN;
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
-
 export default function AddProduct({ onBack, onCreated }) {
   const [images, setImages] = useState([]);
   const [imagesError, setImagesError] = useState("");
@@ -147,11 +145,13 @@ export default function AddProduct({ onBack, onCreated }) {
       fd.append("brand", data.brand.trim());
       fd.append("featured", data.featured);
       fd.append("isActive", data.isActive);
-      tags.forEach((tag) => fd.append("tags", tag));
+      tags.forEach((tag, index) => {
+         fd.append(`tags[${index}]`, tag);
+      });
       images.forEach((img) => fd.append("images", img.file));
 
       const { data: res } = await api.post("/products", fd, {
-        headers: { "Content-Type": "multipart/form-data" },
+        
       });
 
       setSuccess(true);
@@ -191,9 +191,8 @@ export default function AddProduct({ onBack, onCreated }) {
     }`;
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-6 text-slate-900 md:px-6 dark:bg-slate-950 dark:text-white">
+    <div className="min-h-screen bg-[#F1F5F9] px-4 py-6 text-slate-900 md:px-6 dark:bg-slate-950 dark:text-white">
       <div className="mx-auto max-w-6xl">
-        {/* Hero */}
         <section className="mb-6 overflow-hidden rounded-3xl bg-slate-950 p-6 text-white shadow-xl md:p-8 dark:bg-black dark:ring-1 dark:ring-slate-800">
           <button
             type="button"
@@ -244,7 +243,6 @@ export default function AddProduct({ onBack, onCreated }) {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            {/* Gallery */}
             <section className="h-fit rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
               <div className="mb-5 flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-50 text-cyan-500 dark:bg-cyan-950/40 dark:text-cyan-400">
@@ -336,7 +334,6 @@ export default function AddProduct({ onBack, onCreated }) {
               </div>
             </section>
 
-            {/* Form */}
             <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
               <div className="mb-5">
                 <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">

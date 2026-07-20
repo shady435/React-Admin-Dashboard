@@ -15,7 +15,6 @@ import {
   Star,
   Tag,
 } from "lucide-react";
-
 const API_BASE =
   import.meta.env?.VITE_API_BASE_URL ||
   "https://e-commerce-api-3wara.vercel.app";

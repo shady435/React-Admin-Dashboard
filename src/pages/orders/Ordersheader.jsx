@@ -1,6 +1,4 @@
-// OrdersHeader.jsx
 import { RefreshCw } from 'lucide-react';
-
 function OrdersHeader({ totalCount, loading, onRefresh }) {
   return (
     <div className="flex items-start justify-between gap-4 flex-wrap mb-6">
@@ -15,7 +13,7 @@ function OrdersHeader({ totalCount, loading, onRefresh }) {
           type="button"
           onClick={onRefresh}
           className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border-0 outline-none shadow-soft flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
-          title="تحديث"
+          title="Update"
         >
           <RefreshCw className={`w-4 h-4 text-slate-500 dark:text-slate-300 ${loading ? 'animate-spin' : ''}`} />
         </button>

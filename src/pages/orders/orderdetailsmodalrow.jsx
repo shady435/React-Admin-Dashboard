@@ -1,24 +1,19 @@
-// orderdetailsmodalrow.jsx
 import { useEffect, useState } from 'react'
 import { ChevronDown, X, Loader2 } from 'lucide-react'
 import { StatusPill, PaymentPill } from './statusbadge'
 import { STATUS_OPTIONS, formatDate, formatCurrency } from './utils'
-
 export function OrderDetailsModal({ order, onClose, onUpdateStatus, updating }) {
   const [statusValue, setStatusValue] = useState(order.status)
   const [note, setNote] = useState('')
   const [visible, setVisible] = useState(false)
   const [statusOpen, setStatusOpen] = useState(false)
-
   useEffect(() => {
     const t = requestAnimationFrame(() => setVisible(true))
     return () => cancelAnimationFrame(t)
   }, [])
-
   const handleSave = () => {
     onUpdateStatus(order, statusValue)
   }
-
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-slate-900/50" onClick={onClose}>
       <div
@@ -161,7 +156,7 @@ export function OrderDetailsModal({ order, onClose, onUpdateStatus, updating }) 
             <textarea
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              placeholder="ملاحظة اختيارية..."
+              placeholder="Optional note..."
               rows={3}
               className="w-full px-4 py-2.5 rounded-2xl shadow-soft bg-white dark:bg-slate-800 text-sm text-slate-700 dark:text-slate-200 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-koda-teal/40 resize-none mb-3"
             />

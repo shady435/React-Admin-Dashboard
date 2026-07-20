@@ -1,8 +1,6 @@
-// OrdersFilters.jsx
 import { Search } from 'lucide-react';
 import { FilterSelect } from './filterselectstatusdropdown';
 import { STATUS_OPTIONS, PAYMENT_STATUS_OPTIONS, PAYMENT_METHOD_OPTIONS } from './utils';
-
 function OrdersFilters({
   search,
   onSearchChange,
@@ -24,12 +22,10 @@ function OrdersFilters({
           className="w-full pl-10 pr-4 py-2.5 rounded-2xl shadow-soft bg-white dark:bg-slate-800 text-sm text-slate-700 dark:text-white dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-koda-teal/40"
         />
       </div>
-
       <FilterSelect value={statusFilter} onChange={onStatusChange} label="All statuses" options={STATUS_OPTIONS} />
       <FilterSelect value={paymentFilter} onChange={onPaymentChange} label="All payments" options={PAYMENT_STATUS_OPTIONS} />
       <FilterSelect value={methodFilter} onChange={onMethodChange} label="All methods" options={PAYMENT_METHOD_OPTIONS} />
     </div>
   );
 }
-
 export default OrdersFilters;

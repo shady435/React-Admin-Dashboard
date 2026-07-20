@@ -32,7 +32,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="py-8 pr-8 pl-4 bg-gray-50/50 dark:bg-gray-900 min-h-screen">
+    <div className="py-8 pr-8 pl-4 bg-[#F1F5F9] dark:bg-slate-950 min-h-screen">
       <div className='bg-white dark:bg-gray-800 rounded-xl p-4 mt-2 mb-8 shadow-md'>
         <h2 className='text-cyan-400 dark:text-cyan-300 text-xs tracking-[3px] uppercase'>Admin overview</h2>
         <h1 className='text-2xl text-gray-800 dark:text-white mt-2 font-semibold'>Real-time commerce health</h1>

@@ -54,7 +54,6 @@ const handleSubmit = async (e) => {
   return (
     <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-5xl bg-white rounded-[2rem] shadow-soft overflow-hidden grid md:grid-cols-2">
-        {/* Left panel */}
         <div className="relative hidden md:flex flex-col justify-center px-12 py-16 bg-gradient-to-br from-[#216EE8] to-[#1196DC] text-white overflow-hidden">
           <div className="flex items-center gap-2.5 mb-10">
             <div className="w-9 h-9 rounded-xl border-2 border-white/70 flex items-center justify-center">
@@ -85,8 +84,6 @@ const handleSubmit = async (e) => {
             ))}
           </div>
         </div>
-
-        {/* Right panel */}
         <div className="flex flex-col justify-center px-6 py-12 sm:px-14">
           <div className="text-center mb-8">
             <p className="text-[11px] tracking-[0.3em] font-bold text-[#06B6D4]">COMMERCE</p>

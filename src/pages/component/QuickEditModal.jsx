@@ -308,7 +308,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
         className="flex max-h-[90vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-white dark:bg-slate-900 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 px-6 py-4">
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-cyan-400" />
@@ -323,8 +322,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
             <X size={18} />
           </button>
         </div>
-
-        {/* Body */}
         <div className="overflow-y-auto px-6 py-5">
           {loadingProduct && (
             <div className="flex min-h-[280px] flex-col items-center justify-center gap-3 text-slate-500 dark:text-slate-400">
@@ -348,7 +345,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
               )}
 
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-                {/* Gallery */}
                 <section>
                   <div className="mb-4 flex items-center gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-50 dark:bg-cyan-950/40 text-cyan-500 dark:text-cyan-400">
@@ -449,8 +445,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                     <p className="mt-2 text-xs text-red-500 dark:text-red-400">{imagesError}</p>
                   )}
                 </section>
-
-                {/* Fields */}
                 <section>
                   <div className="mb-4">
                     <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
@@ -695,8 +689,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                   </div>
                 </section>
               </div>
-
-              {/* Footer */}
               <div className="mt-4 flex flex-col-reverse gap-3 border-t border-slate-100 dark:border-slate-800 pt-5 sm:flex-row sm:justify-end">
                 <button
                   type="button"

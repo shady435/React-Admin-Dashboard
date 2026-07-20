@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { UserPlus, X } from 'lucide-react';
-
 import UserHeader from './UserHeader';
 import UserStats from './UserState';
 import UserTable from './UserTable';
-
-// التوكن بيتقرأ من localStorage بدل ما يبقى ثابت في الكود (كان بينتهي ويعمل 401)
 function getToken() {
   return (
     localStorage.getItem('token') ||
@@ -32,7 +29,7 @@ function CreateUserForm({ onClose, onUserCreated }) {
 
   const handleSubmit = async () => {
     if (!formData.username || !formData.email || !formData.password) {
-      setError('من فضلك املأ الحقول المطلوبة');
+      setError('Please fill in the required fields');
       return;
     }
     setLoading(true);
@@ -67,7 +64,7 @@ function CreateUserForm({ onClose, onUserCreated }) {
         })
       });
     } catch (err) {
-      console.error('فشل الحفظ في السيرفر (تم الحفظ محليًا فقط):', err);
+      console.error('  Failed to save to the server (saved locally only): ', err);
     }
   };
 
@@ -131,7 +128,7 @@ function Users() {
       }
     })
     .then((response) => {
-      console.log("الداتا اللي جات من الباك إند:", response.data);
+      console.log("The data received from the back-end:", response.data);
       const fetchedUsers = response.data.users || response.data || [];
       setUsersList(fetchedUsers);
     })
@@ -172,7 +169,7 @@ function Users() {
   });
 
   return (
-    <div className="p-6 max-w-[1400px] mx-auto dark:bg-gray-900 min-h-screen">
+    <div className="p-6 max-w-[1400px] mx-auto min-h-screen bg-[#F1F5F9] dark:bg-slate-950">
       <UserHeader
         onAddUserClick={() => setShowForm(!showForm)}
         showForm={showForm}

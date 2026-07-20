@@ -1,33 +1,25 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-
 import OrdersHeader from './Ordersheader';
 import OrdersFilters from './OrdersFilters';
 import OrdersTable from './Orderstable';
 import { OrderDetailsModal } from './orderdetailsmodalrow';
 import { extractList, extractTotalCount, normalizeOrder } from './utils';
-
 function Orders() {
   const [ordersList, setOrdersList] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [paymentFilter, setPaymentFilter] = useState('all');
   const [methodFilter, setMethodFilter] = useState('all');
-
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [updatingId, setUpdatingId] = useState(null);
-  
   const token = localStorage.getItem('token'); 
-
-
   const fetchOrders = () => {
     setLoading(true);
     setError('');
-
     axios.get('https://e-commerce-api-3wara.vercel.app/orders/admin', {
       headers: {
         'Authorization': `Bearer ${token}`
@@ -72,7 +64,7 @@ function Orders() {
   const updateStatus = (order, newStatus) => {
     if (newStatus === order.status) return;
 
-    const confirmed = window.confirm(`تأكيد تغيير حالة الطلب ${order.shortId} إلى "${newStatus}"؟`);
+    const confirmed = window.confirm(`Confirm order status change${order.shortId} to "${newStatus}"؟`);
     if (!confirmed) return;
 
     setUpdatingId(order.id);
@@ -94,7 +86,7 @@ function Orders() {
   };
 
   return (
-    <div className="min-h-screen bg-koda-bg">
+    <div className="min-h-screen bg-[#F1F5F9] dark:bg-slate-950">
       <main className="max-w-7xl mx-auto p-6">
         <OrdersHeader totalCount={totalCount} loading={loading} onRefresh={fetchOrders} />
 

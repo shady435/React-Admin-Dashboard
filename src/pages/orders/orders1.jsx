@@ -1,34 +1,29 @@
 import { useEffect, useMemo, useState, useCallback } from 'react'
 import { Search, ChevronDown, X, Loader2, RefreshCw, AlertTriangle } from 'lucide-react'
 import api from '../../api/axiosInstance'
-
 export default function Orders() {
-  const [orders, setOrders] = useState([]) // كل الطلبات الجاية من السيرفر
-  const [totalCount, setTotalCount] = useState(0) // العدد الكلي للطلبات
-  const [loading, setLoading] = useState(true) // حالة التحميل
-  const [error, setError] = useState('') // رسالة الخطأ لو حصل
-
-  const [search, setSearch] = useState('') // نص البحث
-  const [statusFilter, setStatusFilter] = useState('all') // فلتر حالة الطلب
-  const [paymentFilter, setPaymentFilter] = useState('all') // فلتر حالة الدفع
-  const [methodFilter, setMethodFilter] = useState('all') // فلتر طريقة الدفع
-
-  const [selectedOrder, setSelectedOrder] = useState(null) // الطلب المفتوح
-  const [updatingId, setUpdatingId] = useState(null) //  الطلب اللي بيتحدث
-
+  const [orders, setOrders] = useState([]) 
+  const [totalCount, setTotalCount] = useState(0) 
+  const [loading, setLoading] = useState(true) 
+  const [error, setError] = useState('') 
+  const [search, setSearch] = useState('') 
+  const [statusFilter, setStatusFilter] = useState('all') 
+  const [paymentFilter, setPaymentFilter] = useState('all') 
+  const [methodFilter, setMethodFilter] = useState('all') 
+  const [selectedOrder, setSelectedOrder] = useState(null)
+  const [updatingId, setUpdatingId] = useState(null) 
   const fetchOrders = useCallback(async () => {
     setLoading(true)
     setError('')
     try {
       const { data } = await api.get('/orders/admin')
-
       const list = extractList(data).map(normalizeOrder)
       setOrders(list)
       setTotalCount(extractTotalCount(data, list.length))
     } catch (err) {
 
       setError(
-        err.response?.data?.message || err.message || 'Unable to load requests; please try again.'
+        err.response?.data?.message || err.message || 'Unable to load orders. Please try again.'
       )
     } finally {
       setLoading(false)
@@ -61,8 +56,7 @@ export default function Orders() {
 
     if (newStatus === order.status) return
 
-    const confirmed = window.confirm(`تأكيد تغيير حالة الطلب ${order.shortId} إلى "${newStatus}"؟`)
-
+  const confirmed = window.confirm(`Confirm changing order ${order.shortId} status to "${newStatus}"?`)
     if (!confirmed) return
 
     setUpdatingId(order.id)
@@ -70,7 +64,7 @@ export default function Orders() {
       await api.patch(`/orders/admin/${order.id}/status`, { status: newStatus })
       setOrders((prev) => prev.map((o) => (o.id === order.id ? { ...o, status: newStatus } : o)))
     } catch (err) {
-      alert(err.response?.data?.message || err.message || 'تعذر تحديث حالة الطلب')
+      alert(err.response?.data?.message || err.message || 'Unable to update the order status ')
     } finally {
       setUpdatingId(null)
     }
@@ -95,7 +89,7 @@ export default function Orders() {
               type="button"
               onClick={fetchOrders}
               className="w-10 h-10 rounded-lg border border-koda-border/50 dark:border-slate-700 bg-white dark:bg-slate-800 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-700"
-              title="تحديث"
+              title="Update"
             >
               <RefreshCw className={`w-4 h-4 text-slate-500 dark:text-slate-300 ${loading ? 'animate-spin' : ''}`} />
             </button>

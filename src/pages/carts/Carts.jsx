@@ -6,9 +6,15 @@ const api = axios.create({
   baseURL: "https://e-commerce-api-3wara.vercel.app",
 });
 
-const DEV_FALLBACK_TOKEN =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNDNjYmQ0MzMwYTZjN2ZkYWZlOTc1ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4MzU2MTY5NCwiZXhwIjoxNzgzOTkzNjk0fQ.pbcJKo6R3cwfMp-H5wJ95SVDk8KJhR92vV2C2z8N8Og";
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
 
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token") || DEV_FALLBACK_TOKEN;
   if (token) config.headers.Authorization = `Bearer ${token}`;
@@ -39,7 +45,7 @@ export default function Carts() {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="min-h-screen p-6 space-y-6 bg-[#F1F5F9] dark:bg-slate-950">
       <div className="w-full rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm p-8">
         <span className="text-xs font-bold tracking-widest text-cyan-500 dark:text-cyan-400 uppercase">
           Cart
@@ -73,7 +79,7 @@ export default function Carts() {
 
       {!loading && !error && cart?.items?.length > 0 && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Items */}
+
           <div className="lg:col-span-2 rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-sm p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-sm font-semibold text-gray-800 dark:text-gray-100">

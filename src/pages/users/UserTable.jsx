@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Users as UsersIcon, Edit2, Check, Trash2, X } from 'lucide-react';
-
 function EditUserModal({ user, onClose, onSave }) {
   const [username, setUsername] = useState(user?.name || user?.username || '');
   const [phone, setPhone] = useState(user?.phone || '');
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar || user?.avatarUrl || '');
-
   const handleSave = () => {
     onSave({
       ...user,
@@ -17,7 +15,6 @@ function EditUserModal({ user, onClose, onSave }) {
     });
     onClose();
   };
-
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
       <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 w-full max-w-md shadow-xl">

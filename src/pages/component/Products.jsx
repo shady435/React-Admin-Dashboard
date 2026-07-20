@@ -328,8 +328,7 @@ export default function Products() {
   );
 
   return (
-    <div className="min-h-screen bg-transparent p-6 md:p-8">
-      {/* header */}
+    <div className="min-h-screen bg-[#F1F5F9] dark:bg-slate-950 p-6 md:p-8">
       <div className="flex flex-col gap-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-6 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-50 dark:bg-cyan-950/40 text-cyan-500 dark:text-cyan-400">
@@ -349,16 +348,12 @@ export default function Products() {
           <Icon.Plus className="h-4 w-4" /> Add Product
         </button>
       </div>
-
-      {/* stats */}
       <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
         <StatCard icon={Icon.Box} value={stats.total} label="Total" accent="bg-cyan-50 dark:bg-cyan-950/40 text-cyan-500 dark:text-cyan-400" />
         <StatCard icon={Icon.Star} value={stats.featured} label="Featured" accent="bg-amber-50 dark:bg-amber-950/40 text-amber-500 dark:text-amber-400" />
         <StatCard icon={Icon.Trend} value={stats.inStock} label="In Stock" accent="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-500 dark:text-emerald-400" />
         <StatCard icon={Icon.Cube} value={stats.outOfStock} label="Out of Stock" accent="bg-red-50 dark:bg-red-950/40 text-red-500 dark:text-red-400" />
       </div>
-
-      {/* search + filters */}
       <div className="mt-6 flex flex-col gap-3 rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-3 md:flex-row md:items-center">
         <div className="flex flex-1 items-center gap-2 rounded-xl bg-gray-50 dark:bg-slate-800 px-3 py-2.5">
           <Icon.Search className="h-4 w-4 text-gray-400" />
@@ -409,8 +404,6 @@ export default function Products() {
           </select>
         </div>
       )}
-
-      {/* content */}
       <div className="mt-6">
         {loading && (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

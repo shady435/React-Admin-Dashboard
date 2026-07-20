@@ -1,6 +1,5 @@
 import React from 'react';
 import { Users as UsersIcon, Shield, UserCheck } from 'lucide-react';
-
 function UserState({ users }) {
   const totalUsers = users?.length || 0;
   const admins = users?.filter(user => user?.role?.toLowerCase() === 'admin').length || 0;

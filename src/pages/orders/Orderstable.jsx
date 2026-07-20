@@ -1,12 +1,9 @@
-// OrdersTable.jsx
 import { Loader2, AlertTriangle } from 'lucide-react';
 import { StatusDropdown } from './filterselectstatusdropdown';
 import { PaymentPill } from './statusbadge';
 import { formatDate, formatCurrency } from './utils';
-
 function OrdersTable({ orders, loading, error, updatingId, onRowClick, onUpdateStatus }) {
   return (
-    
 <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-soft overflow-hidden">
   <div className="overflow-x-auto">
     <table className="w-full text-sm">

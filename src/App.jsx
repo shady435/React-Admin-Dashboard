@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider, useAuth } from "./pages/context/AuthContext";
 import { ThemeProvider } from "./pages/context/ThemeContext";
 import { ProtectedRoute } from "./pages/component/ProtectedRoute";
-
 import Login from './pages/login/Login';
 import Layout from './pages/Layout/Layout';
 import Contact from './pages/contact/Contact';
