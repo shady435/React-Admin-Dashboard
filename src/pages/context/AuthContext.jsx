@@ -1,11 +1,9 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import api from '../../api/axiosInstance'
-
 const AuthContext = createContext(null)
-
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true) 
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     const token = localStorage.getItem('token')
     const savedUser = localStorage.getItem('user')
@@ -19,20 +17,20 @@ export function AuthProvider({ children }) {
     }
     setLoading(false)
   }, [])
-
   const login = async (email, password) => {
-    const { data } = await api.post('/auth/login', { email, password })
-
+    const { data } = await api.post('/auth/login', {
+      email,
+      password,
+    })
     if (!data?.token) {
-      throw new Error('لم يتم استلام توكن من السيرفر')
+      throw new Error('No authentication token was received from the server')
     }
     if (data.user?.role !== 'admin') {
-      throw new Error('هذا الحساب غير مصرح له بدخول لوحة التحكم')
+      throw new Error('This account is not authorized to access the admin dashboard')
     }
     localStorage.setItem('token', data.token)
     localStorage.setItem('user', JSON.stringify(data.user))
     setUser(data.user)
-
     return data.user
   }
   const logout = () => {
@@ -40,13 +38,12 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('user')
     setUser(null)
   }
-
   return (
     <AuthContext.Provider
       value={{
         user,
         loading,
-        isAuthenticated: !!user,
+        isAuthenticated: Boolean(user),
         login,
         logout,
       }}
@@ -55,9 +52,11 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   )
 }
-
 export function useAuth() {
-  const ctx = useContext(AuthContext)
-  if (!ctx) throw new Error('useAuth لازم يتستخدم جوه AuthProvider')
-  return ctx
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useAuth must be used inside an AuthProvider')
+  }
+  return context
 }
+

@@ -1,9 +1,6 @@
 import React from 'react';
-
 function RecentOrders({ stats }) {
- 
   const orders = stats?.dashboard?.recentOrders || [];
-  
   const getStatusColor = (status) => {
     switch(status?.toLowerCase()){
       case 'delivered':
@@ -18,23 +15,17 @@ function RecentOrders({ stats }) {
         return 'bg-green-100 dark:bg-green-500/20 text-green-800 dark:text-green-300';
     }
   };
-
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-soft mt-8 max-w-[1400px]">
-      
       <div className="flex justify-between items-center mb-6">
         <div>
           <h3 className="text-[#38bdf8] dark:text-[#7dd3fc] text-xs font-bold tracking-widest uppercase mb-1">Recent Orders</h3>
           <h2 className="text-xl font-bold text-gray-800 dark:text-white">Latest customer activity</h2>
         </div>
-
         <span className="bg-[#e0f2fe] dark:bg-[#0284c7]/20 text-[#38bdf8] dark:text-[#7dd3fc] text-xs font-semibold px-4 py-1.5 rounded-full">
           {orders.length} orders
         </span>
       </div>
-      
-
-      {/* ------------------------  */}
       <div className="flex flex-col gap-3">
         {orders.map((order, index) => (
           <div 
@@ -49,7 +40,6 @@ function RecentOrders({ stats }) {
                 {order?.product || order?.items?.[0]?.name || "Product"} • {order?.date || new Date().toLocaleDateString()}
               </p>
             </div>
-
             <div className="flex items-center gap-6 justify-between sm:justify-end">
               <span className={`px-3 py-1 rounded-full text-xs font-semibold capitalize ${getStatusColor(order?.status)}`}>
                 {order?.status || "delivered"}
@@ -61,9 +51,7 @@ function RecentOrders({ stats }) {
           </div>
         ))}
       </div>
-
     </div>
   );
 }
-
 export default RecentOrders;

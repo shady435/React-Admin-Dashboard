@@ -9,14 +9,11 @@ import {
   CheckCircle2,
   Plus,
 } from "lucide-react";
-
 const API_BASE =
   import.meta.env?.VITE_API_BASE_URL || "https://e-commerce-api-3wara.vercel.app";
-
 const api = axios.create({
   baseURL: API_BASE,
 });
-
 const DEV_FALLBACK_TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNDNjYmQ0MzMwYTZjN2ZkYWZlOTc1ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc4MzU2MTY5NCwiZXhwIjoxNzgzOTkzNjk0fQ.pbcJKo6R3cwfMp-H5wJ95SVDk8KJhR92vV2C2z8N8Og";
 
@@ -25,7 +22,6 @@ api.interceptors.request.use((config) => {
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
-
 const categories = [
   "electronics",
   "fashion",
@@ -36,31 +32,19 @@ const categories = [
   "books",
   "other",
 ];
-
-/**
- * QuickEditModal
- * Props:
- *  - productId: string (the product's _id) — required, opens the modal when set
- *  - onClose: () => void — called when the modal should close
- *  - onSaved: (updatedProduct) => void — called after a successful save
- */
 export default function QuickEditModal({ productId, onClose, onSaved }) {
   const [loadingProduct, setLoadingProduct] = useState(true);
   const [loadError, setLoadError] = useState("");
   const [productSlug, setProductSlug] = useState("");
-
   const [existingImages, setExistingImages] = useState([]);
   const [newImages, setNewImages] = useState([]);
   const [imagesError, setImagesError] = useState("");
   const [dragActive, setDragActive] = useState(false);
-
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState("");
-
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [apiError, setApiError] = useState("");
-
   const {
     register,
     handleSubmit,
@@ -84,28 +68,20 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
       isActive: true,
     },
   });
-
   const priceValue = watch("price");
-
   useEffect(() => {
     if (!productId) return;
-
     let active = true;
-
     async function fetchProduct() {
       try {
         setLoadingProduct(true);
         setLoadError("");
-
         const { data } = await api.get(`/products/${productId}`);
         const product = data.product || data.data || data;
-
         if (!product || typeof product !== "object") {
           throw new Error("Product was not found.");
         }
-
         if (!active) return;
-
         reset({
           name: product.name || "",
           shortDescription: product.shortDescription || "",
@@ -120,8 +96,7 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
           featured: Boolean(product.featured),
           isActive: product.isActive ?? true,
         });
-
-        setTags(Array.isArray(product.tags) ? product.tags : []);
+       setTags(Array.isArray(product.tags) ? product.tags : []);
         console.log("QuickEdit fetched product:", product);
         setProductSlug(product._id || productId);
         setExistingImages(
@@ -142,49 +117,39 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
         if (active) setLoadingProduct(false);
       }
     }
-
     fetchProduct();
-
     return () => {
       active = false;
     };
   }, [productId, reset]);
-
   useEffect(() => {
     return () => {
       newImages.forEach((image) => URL.revokeObjectURL(image.preview));
     };
   }, [newImages]);
-
   const addFiles = (fileList) => {
     const files = Array.from(fileList).filter((file) =>
       ["image/png", "image/jpeg", "image/jpg", "image/webp"].includes(file.type)
     );
-
     const mapped = files.map((file) => ({
       file,
       preview: URL.createObjectURL(file),
     }));
-
     setNewImages((previous) => [...previous, ...mapped]);
     if (mapped.length > 0) setImagesError("");
   };
-
   const handleFileInput = (event) => {
     if (event.target.files?.length) addFiles(event.target.files);
     event.target.value = "";
   };
-
   const handleDrop = (event) => {
     event.preventDefault();
     setDragActive(false);
     if (event.dataTransfer.files?.length) addFiles(event.dataTransfer.files);
   };
-
   const removeExistingImage = (index) => {
     setExistingImages((previous) => previous.filter((_, i) => i !== index));
   };
-
   const removeNewImage = (index) => {
     setNewImages((previous) => {
       const imageToRemove = previous[index];
@@ -192,7 +157,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
       return previous.filter((_, i) => i !== index);
     });
   };
-
   const addTag = () => {
     const value = tagInput.trim();
     if (value && !tags.includes(value)) {
@@ -200,32 +164,25 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
     }
     setTagInput("");
   };
-
   const removeTag = (tag) => {
     setTags((previous) => previous.filter((item) => item !== tag));
   };
-
   const handleTagKeyDown = (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
       addTag();
     }
   };
-
   const onSubmit = async (formData) => {
     setApiError("");
     setImagesError("");
-
     if (existingImages.length + newImages.length === 0) {
       setImagesError("Keep at least one image.");
       return;
     }
-
     setSubmitting(true);
-
     try {
       const data = new FormData();
-
       data.append("name", formData.name.trim());
       data.append("shortDescription", formData.shortDescription.trim());
       data.append("description", formData.description.trim());
@@ -236,30 +193,24 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
       data.append("brand", formData.brand.trim());
       data.append("featured", String(formData.featured));
       data.append("isActive", String(formData.isActive));
-
       if (formData.discountPrice) {
         data.append("discountPrice", formData.discountPrice);
       }
       if (formData.subcategory) {
         data.append("subcategory", formData.subcategory.trim());
       }
-
       tags.forEach((tag) => {
         data.append("tags", tag);
       });
-
       newImages.forEach((image) => {
         data.append("images", image.file);
       });
-
       const { data: response } = await api.patch(
         `/products/update/${productSlug}`,
         data
       );
-
       setSuccess(true);
       onSaved?.(response?.product || response?.data || response);
-
       setTimeout(() => {
         onClose?.();
       }, 900);
@@ -267,7 +218,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
       const responseData = err.response?.data;
       let message =
         responseData?.message || "Failed to update product. Please try again.";
-
       const details = responseData?.errors || responseData?.details;
       if (details) {
         const detailText = Array.isArray(details)
@@ -281,23 +231,19 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
             : String(details);
         message = `${message}: ${detailText}`;
       }
-
       setApiError(message);
       console.error("Product update failed:", responseData || err);
     } finally {
       setSubmitting(false);
     }
   };
-
   const inputClass = (fieldName) =>
     `w-full rounded-xl border px-4 py-3 text-sm text-slate-900 dark:text-white outline-none transition ${
       errors[fieldName]
         ? "border-red-400 bg-red-50 focus:border-red-500 focus:ring-4 focus:ring-red-100 dark:bg-red-950/40 dark:border-red-500/60"
         : "border-slate-200 bg-slate-50 focus:border-cyan-400 focus:bg-white focus:ring-4 focus:ring-cyan-100 dark:border-slate-700 dark:bg-slate-800 dark:focus:bg-slate-800 dark:focus:ring-cyan-900/40"
     }`;
-
   if (!productId) return null;
-
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
@@ -329,13 +275,11 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
               <p className="text-sm font-medium">Loading product...</p>
             </div>
           )}
-
           {!loadingProduct && loadError && (
             <div className="rounded-xl border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/40 p-6 text-center text-sm font-medium text-red-700 dark:text-red-300">
               {loadError}
             </div>
           )}
-
           {!loadingProduct && !loadError && (
             <form onSubmit={handleSubmit(onSubmit)}>
               {apiError && (
@@ -343,7 +287,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                   {apiError}
                 </div>
               )}
-
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
                 <section>
                   <div className="mb-4 flex items-center gap-3">
@@ -359,7 +302,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                       </p>
                     </div>
                   </div>
-
                   {(existingImages.length > 0 || newImages.length > 0) && (
                     <div className="mb-4 grid grid-cols-2 gap-3">
                       {existingImages.map((url, index) => (
@@ -385,7 +327,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                           </span>
                         </div>
                       ))}
-
                       {newImages.map((image, index) => (
                         <div
                           key={`${image.preview}-${index}`}
@@ -411,7 +352,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                       ))}
                     </div>
                   )}
-
                   <label
                     onDragOver={(event) => {
                       event.preventDefault();
@@ -440,7 +380,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                       onChange={handleFileInput}
                     />
                   </label>
-
                   {imagesError && (
                     <p className="mt-2 text-xs text-red-500 dark:text-red-400">{imagesError}</p>
                   )}
@@ -462,7 +401,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                       </p>
                     )}
                   </div>
-
                   <div className="mb-4">
                     <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
                       Short Description
@@ -480,7 +418,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                       </p>
                     )}
                   </div>
-
                   <div className="mb-4">
                     <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
                       Description
@@ -499,7 +436,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                       </p>
                     )}
                   </div>
-
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div className="mb-4">
                       <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
@@ -520,7 +456,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                         </p>
                       )}
                     </div>
-
                     <div className="mb-4">
                       <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
                         Discount Price
@@ -543,7 +478,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                       )}
                     </div>
                   </div>
-
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div className="mb-4">
                       <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
@@ -563,7 +497,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                         </p>
                       )}
                     </div>
-
                     <div className="mb-4">
                       <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
                         SKU
@@ -579,7 +512,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                       )}
                     </div>
                   </div>
-
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div className="mb-4">
                       <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
@@ -598,7 +530,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                         ))}
                       </select>
                     </div>
-
                     <div className="mb-4">
                       <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
                         Subcategory
@@ -609,7 +540,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                       />
                     </div>
                   </div>
-
                   <div className="mb-4">
                     <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
                       Brand
@@ -624,7 +554,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                       </p>
                     )}
                   </div>
-
                   <div className="mb-4">
                     <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
                       Tags
@@ -646,7 +575,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                         <Plus size={18} />
                       </button>
                     </div>
-
                     {tags.length > 0 && (
                       <div className="mt-3 flex flex-wrap gap-2">
                         {tags.map((tag) => (
@@ -668,7 +596,6 @@ export default function QuickEditModal({ productId, onClose, onSaved }) {
                       </div>
                     )}
                   </div>
-
                   <div className="mb-2 flex flex-wrap gap-5">
                     <label className="flex cursor-pointer items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                       <input

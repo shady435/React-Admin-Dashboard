@@ -5,12 +5,10 @@ import { ArrowLeft, ImagePlus, Package, X, Plus, Loader2, CheckCircle2 } from "l
 const api = axios.create({
   baseURL: "https://e-commerce-api-3wara.vercel.app",
 });
-
 const DEV_FALLBACK_TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNDNjYmQ0MzMwYTZjN2ZkYWZlOTc1ZiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0MzY5NzY4NywiZXhwIjoxNzg0MTI5NjfQ.-QGbSF3VUf6y80VcN5w909MqauW90439-M42W0GqV7Y";
-
   api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token") || DEV_FALLBACK_TOKEN;
+  const token = localStorage.getItem("token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });

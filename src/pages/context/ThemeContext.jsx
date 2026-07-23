@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 const ThemeContext = createContext(null)
 export function ThemeProvider({ children }) {
   const [isDark, setIsDark] = useState(() => {
@@ -13,15 +13,24 @@ export function ThemeProvider({ children }) {
       localStorage.setItem('theme', 'light')
     }
   }, [isDark])
-  const toggleTheme = () => setIsDark(prev => !prev)
+  const toggleTheme = () => {
+    setIsDark((prev) => !prev)
+  }
   return (
-    <ThemeContext.Provider value={{ isDark, toggleTheme }}>
+    <ThemeContext.Provider
+      value={{
+        isDark,
+        toggleTheme,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   )
 }
 export function useTheme() {
-  const ctx = useContext(ThemeContext)
-  if (!ctx) throw new Error('useTheme لازم يتستخدم جوه ThemeProvider')
-  return ctx
+  const context = useContext(ThemeContext)
+  if (!context) {
+    throw new Error('useTheme must be used inside ThemeProvider')
+  }
+  return context
 }

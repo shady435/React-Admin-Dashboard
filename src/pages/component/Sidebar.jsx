@@ -7,7 +7,6 @@ import { FaCube } from "react-icons/fa6";
 import { FaCartShopping } from "react-icons/fa6";
 import { CgNotes } from "react-icons/cg";
 import { IoSettings } from "react-icons/io5";
-
 const navItems = [
   { to: '/', label: 'Dashboard', icon: CiHome, end: true },
   { to: '/users', label: 'Users', icon: HiUsers },
@@ -17,7 +16,6 @@ const navItems = [
   { to: '/carts', label: 'Carts', icon: FaCartShopping },
   { to: '/settings', label: 'Settings', icon: IoSettings },
 ];
-
 export default function Sidebar() {
   return (
     <ul className="hidden md:flex flex-col bg-white dark:bg-slate-900 shadow-lg gap-2 py-5 text-[#0F172A] dark:text-white font-medium fixed w-[315px] dark:border-r dark:border-slate-800">
@@ -25,7 +23,6 @@ export default function Sidebar() {
         <h4 className="ps-6 text-[#55DDF2] text-xs font-medium tracking-[6px]">COMMERCE</h4>
         <h2 className="ps-6 text-[20px] font-medium mb-2 dark:text-white">Admin Panel</h2>
       </div>
-
       {navItems.map(({ to, label, icon: Icon, end }) => (
         <li key={to} className="px-6">
           <NavLink
@@ -44,7 +41,6 @@ export default function Sidebar() {
           </NavLink>
         </li>
       ))}
-
       <li>
         <div className="bg-gradient-to-r from-[#17BAEB] to-[#2583E8] mx-5 p-3 px-4 rounded-3xl text-white">
           <h2 className="text-[#BEEDFA] text-xs font-medium">LIVE</h2>

@@ -1,4 +1,3 @@
-// App.jsx
 import { HeroUIProvider } from "@heroui/react";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider, useAuth } from "./pages/context/AuthContext";
@@ -16,7 +15,6 @@ import Orders from './pages/orders/Orders';
 import Products from './pages/component/Products';
 import ProductDetails from './pages/ProductDetails';
 import EditProduct from './pages/EditProduct';
-
 const router = createBrowserRouter([
   { path: '/login', element: <Login /> },
   {

@@ -12,7 +12,6 @@ function getToken() {
     ''
   );
 }
-
 function CreateUserForm({ onClose, onUserCreated }) {
   const [formData, setFormData] = useState({ username: '', email: '', password: '', phone: '' });
   const [loading, setLoading] = useState(false);
@@ -115,7 +114,6 @@ function CreateUserForm({ onClose, onUserCreated }) {
     </div>
   );
 }
-
 function Users() {
   const [usersList, setUsersList] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -136,17 +134,14 @@ function Users() {
       console.error("Error fetching users:", error);
     });
   }, []);
-
   const handleUserCreated = (newUser) => {
     setUsersList((prev) => [newUser, ...prev]);
   };
-
   const handleUserUpdated = (updatedUser) => {
     setUsersList((prev) =>
       prev.map((u) => (u._id === updatedUser._id ? updatedUser : u))
     );
   };
-
   const handleMakeAdmin = (user) => {
     setUsersList((prev) =>
       prev.map((u) =>
@@ -156,18 +151,15 @@ function Users() {
       )
     );
   };
-
   const handleDeleteUser = (user) => {
     setUsersList((prev) => prev.filter((u) => u._id !== user._id));
   };
-
   const filteredUsers = usersList.filter((user) => {
     const name = (user?.name || user?.username || '').toLowerCase();
     const email = (user?.email || '').toLowerCase();
     const term = searchTerm.toLowerCase();
     return name.includes(term) || email.includes(term);
   });
-
   return (
     <div className="p-6 max-w-[1400px] mx-auto min-h-screen bg-[#F1F5F9] dark:bg-slate-950">
       <UserHeader
@@ -189,5 +181,4 @@ function Users() {
     </div>
   );
 }
-
 export default Users;

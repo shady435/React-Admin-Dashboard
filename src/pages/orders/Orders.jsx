@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import OrdersHeader from './Ordersheader';
 import OrdersFilters from './OrdersFilters';
@@ -64,7 +64,7 @@ function Orders() {
   const updateStatus = (order, newStatus) => {
     if (newStatus === order.status) return;
 
-    const confirmed = window.confirm(`Confirm order status change${order.shortId} to "${newStatus}"؟`);
+    const confirmed = window.confirm(`Confirm order status change${order.shortId} to "${newStatus}"?`);
     if (!confirmed) return;
 
     setUpdatingId(order.id);

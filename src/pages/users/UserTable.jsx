@@ -60,23 +60,19 @@ function EditUserModal({ user, onClose, onSave }) {
     </div>
   );
 }
-
 function UserTable({ users, onUpdateUser, onMakeAdmin, onDeleteUser }) {
   const [editingUser, setEditingUser] = useState(null);
-
   const handleSaveEdit = (updatedUser) => {
     if (onUpdateUser) {
       onUpdateUser(updatedUser);
     }
   };
-
   const handleDelete = (user) => {
-    const confirmed = window.confirm(`متأكدة إنك عاوزة تمسحي "${user?.name || user?.username}"؟`);
+    const confirmed = window.confirm(`Are you sure you want to delete it? "${user?.name || user?.username}"؟`);
     if (confirmed && onDeleteUser) {
       onDeleteUser(user);
     }
   };
-
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-soft overflow-hidden">
       <div className="overflow-x-auto">
@@ -96,8 +92,7 @@ function UserTable({ users, onUpdateUser, onMakeAdmin, onDeleteUser }) {
                   <div className="w-10 h-10 rounded-full bg-slate-500 flex items-center justify-center text-white flex-shrink-0">
                      <UsersIcon size={20} />
                   </div>
-                  <div>
-                  
+                  <div>              
                     <p className="font-bold text-gray-900 dark:text-white text-sm">{user?.name || user?.username || "Unknown"}</p>
                     <p className="text-gray-400 dark:text-gray-500 text-xs">{user?.email || "No Email"}</p>
                   </div>
@@ -110,7 +105,6 @@ function UserTable({ users, onUpdateUser, onMakeAdmin, onDeleteUser }) {
                   </span>
                 </td>
                 <td className="py-4 px-6">
-               
                   {user?.verified || user?.isVerified ? (
                     <span className="flex items-center gap-1 text-green-500 dark:text-green-400 text-sm"><Check size={16} /> Yes</span>
                   ) : (
@@ -126,8 +120,6 @@ function UserTable({ users, onUpdateUser, onMakeAdmin, onDeleteUser }) {
                 </td>
               </tr>
             ))}
-            
-         
             {(!users || users.length === 0) && (
               <tr>
                 <td colSpan="4" className="text-center py-8 text-gray-400 dark:text-gray-500">No users found.</td>
@@ -136,7 +128,6 @@ function UserTable({ users, onUpdateUser, onMakeAdmin, onDeleteUser }) {
           </tbody>
         </table>
       </div>
-
       {editingUser && (
         <EditUserModal
           user={editingUser}
@@ -147,5 +138,4 @@ function UserTable({ users, onUpdateUser, onMakeAdmin, onDeleteUser }) {
     </div>
   );
 }
-
 export default UserTable;

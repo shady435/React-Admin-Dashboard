@@ -10,7 +10,6 @@ const STATUS_STYLES = {
   paid: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400',
   failed: 'bg-rose-100 text-rose-700 dark:bg-rose-950/50 dark:text-rose-400',
 }
-
 const DOT_STYLES = {
   pending: 'bg-amber-500',
   processing: 'bg-violet-500',
@@ -21,7 +20,6 @@ const DOT_STYLES = {
   returned: 'bg-orange-500',
   refunded: 'bg-orange-500',
 }
-
 export function StatusPill({ status }) {
   const key = (status || 'pending').toLowerCase()
   const style = STATUS_STYLES[key] || 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'
@@ -35,7 +33,6 @@ export function StatusPill({ status }) {
     </span>
   )
 }
-
 export function PaymentPill({ status }) {
   const key = (status || 'pending').toLowerCase()
   const style =

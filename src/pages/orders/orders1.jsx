@@ -21,7 +21,6 @@ export default function Orders() {
       setOrders(list)
       setTotalCount(extractTotalCount(data, list.length))
     } catch (err) {
-
       setError(
         err.response?.data?.message || err.message || 'Unable to load orders. Please try again.'
       )
@@ -29,11 +28,9 @@ export default function Orders() {
       setLoading(false)
     }
   }, [])
-
   useEffect(() => {
     fetchOrders()
   }, [fetchOrders])
-
   const filtered = useMemo(() => {
     const term = search.trim().toLowerCase()
     return orders.filter((o) => {
@@ -43,22 +40,16 @@ export default function Orders() {
         o.id.toLowerCase().includes(term) ||
         o.customerName?.toLowerCase().includes(term) ||
         o.customerEmail?.toLowerCase().includes(term)
-
       const matchesStatus = statusFilter === 'all' || o.status === statusFilter
       const matchesPayment = paymentFilter === 'all' || o.paymentStatus === paymentFilter
       const matchesMethod = methodFilter === 'all' || o.paymentMethod === methodFilter
       return matchesSearch && matchesStatus && matchesPayment && matchesMethod
     })
   }, [orders, search, statusFilter, paymentFilter, methodFilter])
-
   const updateStatus = async (order, newStatus) => {
- 
-
     if (newStatus === order.status) return
-
   const confirmed = window.confirm(`Confirm changing order ${order.shortId} status to "${newStatus}"?`)
     if (!confirmed) return
-
     setUpdatingId(order.id)
     try {
       await api.patch(`/orders/admin/${order.id}/status`, { status: newStatus })
@@ -69,11 +60,9 @@ export default function Orders() {
       setUpdatingId(null)
     }
   }
-
   return (
     <div className="min-h-screen bg-koda-bg">
       <main className="max-w-7xl mx-auto p-6">
-
         <div className="flex items-start justify-between gap-4 flex-wrap mb-6">
           <div>
             <p className="text-[11px] tracking-[0.2em] font-bold text-koda-muted">
@@ -82,9 +71,6 @@ export default function Orders() {
             <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">Orders</h1>
           </div>
           <div className="flex items-center gap-3">
-
-
-
             <button
               type="button"
               onClick={fetchOrders}
@@ -93,8 +79,6 @@ export default function Orders() {
             >
               <RefreshCw className={`w-4 h-4 text-slate-500 dark:text-slate-300 ${loading ? 'animate-spin' : ''}`} />
             </button>
-
-       
             <div className="bg-white dark:bg-slate-800 border border-koda-border/50 dark:border-slate-700 rounded-xl2 shadow-soft px-5 py-3 text-center">
               <span className="text-2xl font-extrabold text-slate-900 dark:text-white">{totalCount}</span>{' '}
               <span className="text-sm text-koda-muted">total orders</span>
@@ -111,12 +95,10 @@ export default function Orders() {
               className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-koda-border/50 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-slate-700 dark:text-white dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-koda-teal/40 focus:border-koda-teal"
             />
           </div>
-
           <FilterSelect value={statusFilter} onChange={setStatusFilter} label="All statuses" options={STATUS_OPTIONS} />
           <FilterSelect value={paymentFilter} onChange={setPaymentFilter} label="All payments" options={PAYMENT_STATUS_OPTIONS} />
           <FilterSelect value={methodFilter} onChange={setMethodFilter} label="All methods" options={PAYMENT_METHOD_OPTIONS} />
         </div>
-
         <div className="bg-koda-card dark:bg-slate-900 border border-koda-border/50 dark:border-slate-800 rounded-xl2 shadow-soft overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -131,7 +113,6 @@ export default function Orders() {
                 </tr>
               </thead>
               <tbody>
-
                 {loading && (
                   <tr>
                     <td colSpan={6} className="px-6 py-16 text-center text-koda-muted">
@@ -140,8 +121,6 @@ export default function Orders() {
                     </td>
                   </tr>
                 )}
-
-    
                 {!loading && error && (
                   <tr>
                     <td colSpan={6} className="px-6 py-16 text-center text-rose-600 dark:text-rose-400">
@@ -175,8 +154,7 @@ export default function Orders() {
                           <span className="text-slate-500 dark:text-slate-300">{order.customerName || '—'}</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-slate-500 dark:text-slate-400">{formatDate(order.date)}</td>
-                      
+                      <td className="px-6 py-4 text-slate-500 dark:text-slate-400">{formatDate(order.date)}</td>                     
                       <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
                         <StatusDropdown
                           order={order}
@@ -200,7 +178,6 @@ export default function Orders() {
           </div>
         </div>
       </main>
-
       {selectedOrder && (
         <OrderDetailsModal
           order={selectedOrder}

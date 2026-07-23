@@ -17,7 +17,6 @@ function OrdersHeader({ totalCount, loading, onRefresh }) {
         >
           <RefreshCw className={`w-4 h-4 text-slate-500 dark:text-slate-300 ${loading ? 'animate-spin' : ''}`} />
         </button>
-
         <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-soft px-5 py-3 text-center">
           <span className="text-2xl font-extrabold text-slate-900 dark:text-white">{totalCount}</span>{' '}
           <span className="text-sm text-koda-muted">total orders</span>
@@ -26,5 +25,4 @@ function OrdersHeader({ totalCount, loading, onRefresh }) {
     </div>
   );
 }
-
 export default OrdersHeader

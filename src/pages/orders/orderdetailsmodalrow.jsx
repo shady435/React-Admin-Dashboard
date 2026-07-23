@@ -74,7 +74,7 @@ export function OrderDetailsModal({ order, onClose, onUpdateStatus, updating }) 
                     )}
                     <div className="flex-1 min-w-0">
                       <p className="text-slate-700 dark:text-slate-200 font-medium truncate">
-                        {item.name || `منتج ${i + 1}`}
+                        {item.name || `Product ${i + 1}`}
                       </p>
                       <p className="text-xs text-koda-muted">
                         × {item.quantity} · {formatCurrency(item.price)}

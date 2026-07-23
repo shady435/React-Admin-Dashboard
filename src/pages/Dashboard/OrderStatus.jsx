@@ -1,8 +1,6 @@
 import React from "react";
-
 export default function OrderStatus({ dashboard }) {
   const orders = dashboard?.orders || {};
-
   const statusCards = [
     {
       title: "Pending",
@@ -41,30 +39,24 @@ export default function OrderStatus({ dashboard }) {
       bg: "bg-red-50 dark:bg-red-500/10",
     },
   ];
-
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
-      {/* Header */}
       <div className="flex justify-between items-start">
         <div>
           <h2 className="text-cyan-400 dark:text-cyan-300 text-sm tracking-[5px] uppercase">
             Order Status
           </h2>
-
           <h1 className="text-2xl font-semibold text-gray-800 dark:text-white mt-2">
             Live Fulfillment Breakdown
           </h1>
-
           <p className="text-gray-500 dark:text-gray-400 mt-2 mb-6">
             Current status of all customer orders.
           </p>
         </div>
-
         <span className="bg-cyan-100 dark:bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 text-xs font-semibold px-4 py-2 rounded-full">
           Updated from API
         </span>
       </div>
-
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {statusCards.map((item) => (
           <div
@@ -74,7 +66,6 @@ export default function OrderStatus({ dashboard }) {
             <h3 className={`text-sm font-semibold uppercase ${item.color}`}>
               {item.title}
             </h3>
-
             <p className={`text-4xl font-bold mt-3 ${item.color}`}>
               {item.value}
             </p>

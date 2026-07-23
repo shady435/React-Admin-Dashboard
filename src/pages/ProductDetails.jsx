@@ -1,24 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import {
-  ArrowLeft,
-  BadgeCheck,
-  Box,
-  ChevronLeft,
-  ChevronRight,
-  Edit3,
-  Eye,
-  ImageOff,
-  Loader2,
-  Package,
-  Star,
-  Tag,
-} from "lucide-react";
+import {ArrowLeft, BadgeCheck,Box,ChevronLeft,ChevronRight,Edit3,Eye,ImageOff,Loader2,Package,Star,Tag,} from "lucide-react";
 const API_BASE =
   import.meta.env?.VITE_API_BASE_URL ||
   "https://e-commerce-api-3wara.vercel.app";
-
+  
 const api = axios.create({
   baseURL: API_BASE,
 });

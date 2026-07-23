@@ -2,10 +2,8 @@ import { useEffect, useMemo, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import QuickEditModal from "./QuickEditModal";
-
 const API_BASE =
   import.meta.env?.VITE_API_BASE_URL || "https://e-commerce-api-3wara.vercel.app";
-
 const api = axios.create({
   baseURL: API_BASE,
 });
@@ -44,11 +42,9 @@ function normalizeProduct(p) {
     slug: p.slug ?? "",
   };
 }
-
 function currency(n) {
   return `$${Number(n).toLocaleString()}`;
 }
-
 const Icon = {
   Box: (props) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
@@ -108,8 +104,6 @@ const Icon = {
     </svg>
   ),
 };
-
-
 function StatCard({ icon: IconCmp, value, label, accent }) {
   return (
     <div className="flex items-center gap-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-5">
@@ -127,9 +121,7 @@ function ProductCard({ product, onView, onEdit, onQuickEdit, onDelete, deleting 
   const breadcrumb = [product.category, product.subcategory, product.brand]
     .filter(Boolean)
     .map((s) => s.toUpperCase());
-
   const outOfStock = product.stock <= 0;
-
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
       <div className="relative h-56 w-full bg-gray-100 dark:bg-slate-800">
@@ -145,13 +137,11 @@ function ProductCard({ product, onView, onEdit, onQuickEdit, onDelete, deleting 
             <Icon.Box className="h-10 w-10" />
           </div>
         )}
-
         {product.featured && (
           <span className="absolute left-3 top-3 flex items-center gap-1 rounded-md bg-amber-400 px-2 py-1 text-[11px] font-semibold text-slate-900">
             <Icon.Star className="h-3 w-3" /> Featured
           </span>
         )}
-
         <span
           className={`absolute bottom-3 right-3 rounded-full px-2.5 py-1 text-[11px] font-medium ${
             outOfStock
@@ -162,7 +152,6 @@ function ProductCard({ product, onView, onEdit, onQuickEdit, onDelete, deleting 
           {outOfStock ? "Out of stock" : `${product.stock} in stock`}
         </span>
       </div>
-
       <div className="p-4">
         <h3 className="text-base font-semibold text-gray-900 dark:text-white">{product.title}</h3>
         {breadcrumb.length > 0 && (
@@ -170,13 +159,11 @@ function ProductCard({ product, onView, onEdit, onQuickEdit, onDelete, deleting 
             {breadcrumb.join(" · ")}
           </p>
         )}
-
         {product.shortDescription && (
           <p className="mt-2 line-clamp-2 text-sm text-gray-500 dark:text-slate-400">
             {product.shortDescription}
           </p>
         )}
-
         <div className="mt-3 flex items-baseline gap-2">
           <span className="text-xl font-bold text-gray-900 dark:text-white">{currency(product.price)}</span>
           {product.discount ? (
@@ -185,7 +172,6 @@ function ProductCard({ product, onView, onEdit, onQuickEdit, onDelete, deleting 
             </span>
           ) : null}
         </div>
-
         {product.tags?.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-1.5">
             {product.tags.map((t) => (
@@ -236,13 +222,11 @@ function ProductCard({ product, onView, onEdit, onQuickEdit, onDelete, deleting 
 }
 export default function Products() {
   const navigate = useNavigate();
-
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
   const [quickEditProductId, setQuickEditProductId] = useState(null);
-
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [showFilters, setShowFilters] = useState(false);
@@ -270,17 +254,14 @@ export default function Products() {
       setLoading(false);
     }
   }, []);
-
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
-
   const handleDelete = useCallback(async (product) => {
     const confirmed = window.confirm(
       `Delete "${product.title}"? This can't be undone.`
     );
     if (!confirmed) return;
-
     setDeletingId(product.id);
     try {
       await api.delete(`/products/${product.id}`);
@@ -295,12 +276,10 @@ export default function Products() {
       setDeletingId(null);
     }
   }, []);
-
   const categories = useMemo(
     () => [...new Set(products.map((p) => p.category).filter(Boolean))],
     [products]
   );
-
   const filtered = useMemo(() => {
     return products.filter((p) => {
       const matchesSearch =
@@ -316,7 +295,6 @@ export default function Products() {
       return matchesSearch && matchesCategory && matchesStock;
     });
   }, [products, search, categoryFilter, stockFilter]);
-
   const stats = useMemo(
     () => ({
       total: products.length,
@@ -326,7 +304,6 @@ export default function Products() {
     }),
     [products]
   );
-
   return (
     <div className="min-h-screen bg-[#F1F5F9] dark:bg-slate-950 p-6 md:p-8">
       <div className="flex flex-col gap-4 rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-6 md:flex-row md:items-center md:justify-between">
@@ -378,7 +355,6 @@ export default function Products() {
           <Icon.Search className="h-4 w-4" /> Search
         </button>
       </div>
-
       {showFilters && (
         <div className="mt-3 flex flex-wrap gap-3 rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-4">
           <select
@@ -415,7 +391,6 @@ export default function Products() {
             ))}
           </div>
         )}
-
         {!loading && error && (
           <div className="rounded-2xl border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30 p-6 text-center text-sm text-red-600 dark:text-red-400">
             Couldn't load products: {error}
@@ -427,13 +402,11 @@ export default function Products() {
             </button>
           </div>
         )}
-
         {!loading && !error && filtered.length === 0 && (
           <div className="rounded-2xl border border-gray-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm p-10 text-center text-sm text-gray-400">
             No products match your search.
           </div>
         )}
-
         {!loading && !error && filtered.length > 0 && (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {filtered.map((p) => (
@@ -450,7 +423,6 @@ export default function Products() {
           </div>
         )}
       </div>
-
       {quickEditProductId && (
         <QuickEditModal
           productId={quickEditProductId}

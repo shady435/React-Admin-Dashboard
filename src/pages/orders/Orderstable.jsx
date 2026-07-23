@@ -7,7 +7,6 @@ function OrdersTable({ orders, loading, error, updatingId, onRowClick, onUpdateS
 <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-soft overflow-hidden">
   <div className="overflow-x-auto">
     <table className="w-full text-sm">
-        
       <thead>
         <tr className="text-left text-[11px] tracking-wider text-slate-400 dark:text-slate-500 font-bold uppercase">
           <th className="px-6 py-3.5">Order</th>
@@ -27,7 +26,6 @@ function OrdersTable({ orders, loading, error, updatingId, onRowClick, onUpdateS
                 </td>
               </tr>
             )}
-
             {!loading && error && (
               <tr>
                 <td colSpan={6} className="px-6 py-16 text-center text-rose-600 dark:text-rose-400">
@@ -36,7 +34,6 @@ function OrdersTable({ orders, loading, error, updatingId, onRowClick, onUpdateS
                 </td>
               </tr>
             )}
-
             {!loading && !error && orders.length === 0 && (
               <tr>
                 <td colSpan={6} className="px-6 py-16 text-center text-koda-muted">
@@ -44,7 +41,6 @@ function OrdersTable({ orders, loading, error, updatingId, onRowClick, onUpdateS
                 </td>
               </tr>
             )}
-
             {!loading &&
               !error &&
               orders.map((order) => (
@@ -87,5 +83,4 @@ function OrdersTable({ orders, loading, error, updatingId, onRowClick, onUpdateS
     </div>
   );
 }
-
 export default OrdersTable;
