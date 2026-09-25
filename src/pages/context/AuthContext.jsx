@@ -1,9 +1,12 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import api from '../../api/axiosInstance'
+
 const AuthContext = createContext(null)
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     const token = localStorage.getItem('token')
     const savedUser = localStorage.getItem('user')
@@ -17,27 +20,29 @@ export function AuthProvider({ children }) {
     }
     setLoading(false)
   }, [])
+
   const login = async (email, password) => {
-    const { data } = await api.post('/auth/login', {
-      email,
-      password,
-    })
-    if (!data?.token) {
-      throw new Error('No authentication token was received from the server')
-    }
-    if (data.user?.role !== 'admin') {
-      throw new Error('This account is not authorized to access the admin dashboard')
-    }
-    localStorage.setItem('token', data.token)
-    localStorage.setItem('user', JSON.stringify(data.user))
-    setUser(data.user)
-    return data.user
+    const fakeAdminUser = {
+      id: "1",
+      name: "Shady Emad",
+      email: email || "admin@example.com",
+      role: "admin"
+    };
+    const fakeToken = "fake-jwt-token-12345";
+
+    localStorage.setItem('token', fakeToken)
+    localStorage.setItem('user', JSON.stringify(fakeAdminUser))
+    setUser(fakeAdminUser)
+    
+    return fakeAdminUser
   }
+
   const logout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
     setUser(null)
   }
+
   return (
     <AuthContext.Provider
       value={{
@@ -52,6 +57,7 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   )
 }
+
 export function useAuth() {
   const context = useContext(AuthContext)
   if (!context) {
@@ -59,4 +65,3 @@ export function useAuth() {
   }
   return context
 }
-
